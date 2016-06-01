@@ -12,6 +12,22 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Random;
 
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.StringUtils;
 import tk.wurst_client.events.ChatInputEvent;
@@ -30,11 +46,12 @@ import tk.wurst_client.mods.Mod.Info;
 @Bypasses
 public class MassTellMod extends Mod implements UpdateListener,
 	ChatInputListener
-{
+	{
 	private float speed = 1F;
 	private int i;
 	private ArrayList<String> players;
 	private Random random = new Random();
+	private String message=" HELLO! ";
 	
 	@Override
 	public void onEnable()
@@ -48,6 +65,13 @@ public class MassTellMod extends Mod implements UpdateListener,
 		Collections.shuffle(players, random);
 		wurst.events.add(ChatInputListener.class, this);
 		wurst.events.add(UpdateListener.class, this);
+		
+		window = (String)JOptionPane.showInputDialog(frame, "Enter the message you would like to be whispered to everyone:\n" + "WHISPER SHOUT!!", "It's a secret until it is told", JOptionPane.PLAIN_MESSAGE, icon, null, "Look behind you ;)");
+		if ((window != null) && (window.length() > 0)) {
+		 message=window;
+		 return;
+		}
+		setLabel("...");
 	}
 	
 	@Override
